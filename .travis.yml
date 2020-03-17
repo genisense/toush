@@ -6,4 +6,6 @@ notifications:
   email: false
 scripts:
   - node src/index.js tx/pxr5/hawkwind.js
+  - dir tx
+  - dir tx/pxr5
   - npm test

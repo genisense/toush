@@ -47,7 +47,7 @@ const boot = () => {
     const pathNfilesObj = createFilePathObj(param);
     makeDir(pathNfilesObj.path);
     makeFiles(pathNfilesObj);
-    //console.log(pathNfilesObj);
+    console.log(pathNfilesObj);
     exec(`"code" ${pathNfilesObj.cliParamFiles}`);
   }
 };
