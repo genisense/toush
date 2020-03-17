@@ -8,7 +8,6 @@ cache:
   directories:
     - 'node_modules'
 script:
-  - npm run
   - npm install -g .
   - toush test/engines/henry.js,thomas.js test/controllers/fat.js,thin.js
 
