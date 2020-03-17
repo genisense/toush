@@ -1,7 +1,5 @@
 language: node_js
 os: windows
-node_js:
-  - 'stable'
 sudo: false
 notifications:
   email: false
@@ -11,7 +9,7 @@ cache:
     - 'node_modules'
 script:
   - npm run
-  - npm install .
+  - npm install -g .
   - toush test/engines/henry.js,thomas.js test/controllers/fat.js,thin.js
 
 deploy:
