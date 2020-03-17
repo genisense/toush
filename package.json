@@ -1,12 +1,23 @@
 {
   "name": "@genisense/toush",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
+  "description": "power touch cli command. mkdir, touch, open in IDE in one go.",
   "bin": "src/index.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint src",
     "test": "node src/index.js t1/t2/hello.txt && echo \"Error: no test specified\" && exit 0"
   },
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "touch",
+    "mkdir",
+    "ide",
+    "vscode",
+    "glob"
+  ],
   "author": "Henry Kemp",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  }
 }

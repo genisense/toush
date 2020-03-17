@@ -48,7 +48,8 @@ const boot = () => {
     makeDir(pathNfilesObj.path);
     makeFiles(pathNfilesObj);
     console.log(pathNfilesObj);
-    exec(`"code" ${pathNfilesObj.cliParamFiles}`);
+    if (pathNfilesObj.files[0] != '')
+      exec(`"code" ${pathNfilesObj.cliParamFiles}`);
   }
 };
 
