@@ -1,17 +1,7 @@
-language: node_js
 os: windows
-sudo: false
+language: node_js
 notifications:
   email: false
-cache:
-  npm: true
-  directories:
-    - 'node_modules'
 script:
   - npm install -g .
   - toush test/engines/henry.js,thomas.js test/controllers/fat.js,thin.js
-
-deploy:
-  provider: npm
-  on:
-    branch: prod
