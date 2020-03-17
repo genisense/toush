@@ -4,5 +4,4 @@ language: node_js
 notifications:
   email: false
 script:
-  - npm install -g .
-  - toush test/engines/henry.js,thomas.js test/controllers/fat.js,thin.js
+  - node src/index.js test/engines/henry.js,thomas.js test/controllers/fat.js,thin.js
