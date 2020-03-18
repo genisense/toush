@@ -1,0 +1,11 @@
+node_modules
+examples
+test
+*.test.js
+.travis.yml
+.prettierrc
+.eslint.json
+tsconfig.json
+__mocks__
+.env*
+test

@@ -2,10 +2,14 @@
   "name": "toush",
   "version": "0.0.3",
   "description": "power touch cli command. mkdir, touch, open in IDE in one go.",
-  "bin": "src/index.js",
+  "bin": "bin/index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint src",
-    "test": "node src/index.js t1/t2/hello.txt && echo \"Error: no test specified\" && exit 0"
+    "postinstall": "npx tsc",
+    "dev": "tsc-watch --onSuccess \"node ./bin/server.js\"",
+    "build": "tsc",
+    "start": "npx pm2 start pm2.yaml",
+    "test": "jest --coverage --verbose"
   },
   "keywords": [
     "cli",
@@ -19,6 +23,33 @@
   "repository": "git@github.com:genisense/toush.git",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^6.8.0"
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.1",
+    "eslint": "^6.8.0",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testPathIgnorePatterns": [
+      "./bin/",
+      "./node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "dependencies": {
+    "tsc-watch": "^4.2.3"
   }
 }

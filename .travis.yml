@@ -8,4 +8,5 @@ node_js:
 notifications:
   email: false
 scripts:
-  - npm test
+  - node test/glob.js  ./*
+  - node test/glob.js  sample/**/*
