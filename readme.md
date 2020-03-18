@@ -14,7 +14,7 @@ toush does three things in one command:
 
 install:
 
-    $ npm install -g @genisense/toush
+    $ npm install -g toush
 
 further examples:
 

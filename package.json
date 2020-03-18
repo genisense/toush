@@ -1,6 +1,6 @@
 {
-  "name": "@genisense/toush",
-  "version": "0.0.2",
+  "name": "toush",
+  "version": "0.0.3",
   "description": "power touch cli command. mkdir, touch, open in IDE in one go.",
   "bin": "src/index.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "glob"
   ],
   "author": "Henry Kemp",
+  "repository": "git@github.com:genisense/toush.git",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^6.8.0"
