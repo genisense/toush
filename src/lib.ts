@@ -1,35 +1,42 @@
 import fs from 'fs';
 
 interface PathNfilesObj {
-  path: string;
-  files: string[];
-  cliParamFiles: string;
+  path: string; // single dir path
+  files: string[]; //array of files (at path)
 }
 
-/*
-@param string : of paths/file(s),f2,f3
-@return {} : PathNfilesObj
-    {
-        path : single dir path
-        files : string[] of files (without path)
-        cliParamFiles: string for convenience: of path/file path/file... space separated
-    }
-*/
 export const createFilePathObj = (pathNFiles: string): PathNfilesObj => {
   const lastSlashPos = pathNFiles.lastIndexOf('/');
   const path = pathNFiles
     .slice(0, lastSlashPos + 1)
-    .replace(/^\.\//, ''); /* if ./ strip for consistent handling  */
-  const files = pathNFiles.slice(lastSlashPos + 1).split(',');
-  const cliParamFiles = files.map(val => path + val).join(' ');
-  return { path, files, cliParamFiles };
+    .replace(
+      /^\.\//,
+      ''
+    ); /* in case path starts ./ strip for consistent handling  */
+
+  const maybeFiles = pathNFiles.slice(lastSlashPos + 1).split(',');
+
+  const fileArr = [];
+  for (let file of maybeFiles) {
+    if (!fs.existsSync(path + file)) {
+      fileArr.push(file);
+    } else {
+      /* check its a file not dir (needed because : glob /* leaves trailing slash off) */
+      const stats = fs.lstatSync(path + file);
+      if (stats.isFile()) {
+        fileArr.push(file);
+      }
+    }
+  }
+  console.log({ fileArr });
+
+  return {
+    path,
+    files: fileArr
+  };
 };
-
 /*
-    @param path : string 
-    @return: undefined
-
-    for each / separated dir in string create dir if does not exist.
+ makes all directories that dont exist for given path
 */
 export const makeDir = (path: string): void => {
   const parts = path.split('/');
@@ -46,9 +53,10 @@ export const makeDir = (path: string): void => {
     }
   }
 };
+
 /*
- @param: pathNfileObj {path: required, files: required }
- creates empty files if they dont exist.
+  @param: PathNfileObj
+  @effect: creates empty files (if they dont exist).
 */
 export const makeFiles = (pathNfilesObj: PathNfilesObj): void => {
   const path = pathNfilesObj.path;

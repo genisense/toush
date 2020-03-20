@@ -9,3 +9,4 @@ tsconfig.json
 __mocks__
 .env*
 test
+notes.md
