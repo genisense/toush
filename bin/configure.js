@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
-const path = require('path');
-const cwd = path.resolve(process.cwd(), '.');
+const Path = require('path');
+const cwd = Path.resolve(process.cwd(), '.');
 const CONFIG_FILE = 'toushrc';
 /*
 given @param args, is first param -c ?
@@ -43,7 +43,12 @@ exports.getConfig = () => {
         const configFile = exports.findConfig();
         const data = fs_1.default.readFileSync(configFile, 'utf8');
         const command = JSON.parse(data).idecommand;
-        console.log(`using config file: ${path + '/' + CONFIG_FILE}`);
+        if (command.match(/rm|del|rimraf/)) {
+            console.error(`Naughty naughty! - destructive command set in toushrc config file: ${configFile}. Command: '${command}', Disallowed.`);
+            console.log('Recomend reset command with toush -c, and find practical joker!');
+            process.exit(1);
+        }
+        console.log(`using config file: ${configFile}`);
         return command;
     }
     catch (error) {

@@ -5,29 +5,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 exports.createFilePathObj = (pathNFiles) => {
+    if (pathNFiles.match(/^\.\.\//)) {
+        console.error(`Sorry, using toush with ../ disallowed. Can only affect current/sub directories.`);
+        process.exit(1);
+    }
     const lastSlashPos = pathNFiles.lastIndexOf('/');
     const path = pathNFiles
         .slice(0, lastSlashPos + 1)
         .replace(/^\.\//, ''); /* in case path starts ./ strip for consistent handling  */
     const maybeFiles = pathNFiles.slice(lastSlashPos + 1).split(',');
-    const fileArr = [];
+    const files = [];
     for (let file of maybeFiles) {
         if (!fs_1.default.existsSync(path + file)) {
-            fileArr.push(file);
+            files.push(file);
         }
         else {
             /* check its a file not dir (needed because : glob /* leaves trailing slash off) */
             const stats = fs_1.default.lstatSync(path + file);
             if (stats.isFile()) {
-                fileArr.push(file);
+                files.push(file);
             }
         }
     }
-    console.log({ fileArr });
-    return {
-        path,
-        files: fileArr
-    };
+    return { path, files };
 };
 /*
  makes all directories that dont exist for given path

@@ -54,6 +54,7 @@ This creates a `toushrc` file in your current directory. You can simply move the
 
 - Set how to open IDE with `toush -c`. Move touchrc file to parent directory to reuse across projects.
   Tested with Theia IDE - gitpod, Apache Che ( set to `open`). For vscode set to `code`.
+- Guards against destructive abuse.
 
 ### V0.0.3
 
