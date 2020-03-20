@@ -1,48 +1,72 @@
-# toush - touch++
+# toush - a touch++
 
     $ toush src/engines/thomas.js,henry.js src/controllers/fat.js,thin.js
 
 toush does three things in one command:
 
-1. Creates directories from the paths given if they dont exist. e.g: src, src/engines, src/controllers
-2. Creates the file(s) if they dont exist.
-3. Opens the file(s) in vscode.
+1. Creates directories from the paths given.
+2. Creates the files.
+3. Opens the files in your IDE of choice.
 
-install:
+## install:
 
     $ npm install -g toush
 
-further examples:
+## Why toush ?
 
-    # just open all files in a dir:
+- Primarily intended to help make better tutorials. Its great when tutorials provide mkdir and touch snippets - less thought impedance than mouse clicking in IDE. Toush is three times faster than mkdir,touch, open. Also works for Windows.
+
+- Secondarily, power user way of creating/opening files during development. Try it, you'll never go back!
+
+## Examples:
+
+Just open all existing files in a dir:
+
     $ toush src/engines/*
 
-    # standard globbing, all subdirs:
-    $ toush src/**/*
+Open all existing .ts files in all sub-directories:
 
-    #  Multiple comma separated files created/opened per directory:
+    $ toush src/**/*.ts
+
+Create/open multiple files per directory (comma separted files per dir):
+
     $ toush src/engines/thomas.js,henry.js src/controllers/fat.js,thin.js
 
-    # multiple paths as paramaters (verbose longform version of the above)
-    $ toush src/controllers/fat.js src/controllers/thin.js src/engines/thomas.js src/engines/henry.js
+Tradiltional equivalent of the above (dont need to do it this verbose way anymore!)
 
-    # should you want to make empty directory - end with fwd slash:
+    $ toush src/engines/thomas.js src/engines/henry.js src/controllers/fat.js src/controllers/thin.js
+
+Should you want to create empty directories, end param string with fwd slash:
+
     $ toush src/empty/dir/for/later/  ./and/another/  and-make/this-file-by-the-by.js
 
-# What is toush good for anyway?
+# configure
 
-- Primarily made for tutorials. Its really great when tutorials provide mkdir, touch snippets - less thought impedance than ide mouse clicking. But with toush, tutorials can be even more awesome!
+By default '`code`' is executed to open the files in [vscode](https://github.com/microsoft/vscode). To change this, say to '`open`' for [Theia IDE](https://github.com/eclipse-theia/theia) ([Apache Che](https://www.eclipse.org/che/), [Gitpod](https://github.com/gitpod-io/gitpod)):
 
-- Secondarily, power user way of creating/opening files during development.
+    toush -c open
 
-## V0.0.3
+This creates a `toushrc` file in your current directory. You can simply move the file to any higher up directory to share config across different projects.
 
-Updated readme with globbing.
+## Changelog
 
-Run tested ok on mac, linux, windows.
+### V0.0.4
 
-Note - wired to execute `$ code` for opening files in IDE. (you are free to fork/alias if want other).
+- Set how to open IDE with `toush -c`. Move touchrc file to parent directory to reuse across projects.
+  Tested with Theia IDE - gitpod, Apache Che ( set to `open`). For vscode set to `code`.
+- Guards against destructive abuse.
 
-Why as a global npm not just a bash script/binary etc? - portable, ease of installation, ease of extension.
+### V0.0.3
 
-Switched to Typescript.
+- Switched to Typescript.
+
+### V0.0.2
+
+- Updated with globbing.
+
+- Run tested ok on mac, linux, windows.
+
+### v0.0.1
+
+- initial release
+- Why as a global npm not just a bash script/binary etc? - portable, ease of installation, ease of extension.

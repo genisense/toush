@@ -4,29 +4,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
-/*
-@param string : of paths/file(s),f2,f3
-@return {} : PathNfilesObj
-    {
-        path : single dir path
-        files : string[] of files (without path)
-        cliParamFiles: string for convenience: of path/file path/file... space separated
-    }
-*/
 exports.createFilePathObj = (pathNFiles) => {
+    if (pathNFiles.match(/^\.\.\//)) {
+        console.error(`Sorry, using toush with ../ disallowed. Can only affect current/sub directories.`);
+        process.exit(1);
+    }
     const lastSlashPos = pathNFiles.lastIndexOf('/');
     const path = pathNFiles
         .slice(0, lastSlashPos + 1)
-        .replace(/^\.\//, ''); /* if ./ strip for consistent handling  */
-    const files = pathNFiles.slice(lastSlashPos + 1).split(',');
-    const cliParamFiles = files.map(val => path + val).join(' ');
-    return { path, files, cliParamFiles };
+        .replace(/^\.\//, ''); /* in case path starts ./ strip for consistent handling  */
+    const maybeFiles = pathNFiles.slice(lastSlashPos + 1).split(',');
+    const files = [];
+    for (let file of maybeFiles) {
+        if (!fs_1.default.existsSync(path + file)) {
+            files.push(file);
+        }
+        else {
+            /* check its a file not dir (needed because : glob /* leaves trailing slash off) */
+            const stats = fs_1.default.lstatSync(path + file);
+            if (stats.isFile()) {
+                files.push(file);
+            }
+        }
+    }
+    return { path, files };
 };
 /*
-    @param path : string
-    @return: undefined
-
-    for each / separated dir in string create dir if does not exist.
+ makes all directories that dont exist for given path
 */
 exports.makeDir = (path) => {
     const parts = path.split('/');
@@ -45,8 +49,8 @@ exports.makeDir = (path) => {
     }
 };
 /*
- @param: pathNfileObj {path: required, files: required }
- creates empty files if they dont exist.
+  @param: PathNfileObj
+  @effect: creates empty files (if they dont exist).
 */
 exports.makeFiles = (pathNfilesObj) => {
     const path = pathNfilesObj.path;

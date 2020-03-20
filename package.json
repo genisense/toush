@@ -1,14 +1,13 @@
 {
   "name": "toush",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "power touch cli command. mkdir, touch, open in IDE in one go.",
   "bin": "bin/index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint src",
     "postinstall": "npx tsc",
-    "dev": "tsc-watch --onSuccess \"node ./bin/server.js\"",
+    "dev": "tsc-watch --onSuccess \"node ./bin/index.js\"",
     "build": "tsc",
-    "start": "npx pm2 start pm2.yaml",
     "test": "jest --coverage --verbose"
   },
   "keywords": [
@@ -28,7 +27,8 @@
     "eslint": "^6.8.0",
     "jest": "^25.1.0",
     "ts-jest": "^25.2.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "tsc-watch": "^4.2.3"
   },
   "jest": {
     "verbose": true,
@@ -48,8 +48,5 @@
       "json",
       "node"
     ]
-  },
-  "dependencies": {
-    "tsc-watch": "^4.2.3"
   }
 }
